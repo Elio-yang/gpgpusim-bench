@@ -5,6 +5,6 @@ do
 	echo $bench
 	pushd . >& /dev/null
 	cd $bench
-	make clean; make clean-gem5-fusion
+	make clean;
 	popd >& /dev/null
 done

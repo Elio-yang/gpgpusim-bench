@@ -3,16 +3,18 @@ export GPUAPPS_SETUP_ENVIRONMENT_WAS_RUN=
 export GPUAPPS_ROOT="$( cd "$( dirname "$BASH_SOURCE" )" && pwd )"/../
 export CUDA_PATH=$CUDA_INSTALL_PATH
 
-if [ ! -d $NVIDIA_COMPUTE_SDK_LOCATION/../4.2 ]; then
-    echo "SDK 4.2 Not detected - installing and building"
-    if [ ! -f ./gpucomputingsdk_4.2.9_linux.run ]; then
-        wget http://developer.download.nvidia.com/compute/cuda/4_2/rel/sdk/gpucomputingsdk_4.2.9_linux.run
-    fi
-    chmod u+x gpucomputingsdk_4.2.9_linux.run
-    ./gpucomputingsdk_4.2.9_linux.run -- --prefix=`pwd`/4.2 --cudaprefix=$CUDA_INSTALL_PATH
-    export NVIDIA_COMPUTE_SDK_LOCATION=`pwd`/4.2
-    make -j -i -C $NVIDIA_COMPUTE_SDK_LOCATION/
-fi
+# if [ ! -d $NVIDIA_COMPUTE_SDK_LOCATION/../4.2 ]; then
+#     echo "SDK 4.2 Not detected - installing and building"
+#     if [ ! -f ./gpucomputingsdk_4.2.9_linux.run ]; then
+#         wget http://developer.download.nvidia.com/compute/cuda/4_2/rel/sdk/gpucomputingsdk_4.2.9_linux.run
+#     fi
+#     chmod u+x gpucomputingsdk_4.2.9_linux.run
+#     ./gpucomputingsdk_4.2.9_linux.run -- --prefix=`pwd`/4.2 --cudaprefix=$CUDA_INSTALL_PATH
+#     export NVIDIA_COMPUTE_SDK_LOCATION=`pwd`/4.2
+#     make -j -i -C $NVIDIA_COMPUTE_SDK_LOCATION/
+# fi
+
+NVIDIA_COMPUTE_SDK_LOCATION=/u/xqg5sq/insight-lab/salus/gpu-app-collection/src/4.2
 
 if [ ! -n "$CUDA_INSTALL_PATH" ]; then
     echo "ERROR *** CUDA_INSTALL_PATH not set;"
@@ -101,9 +103,9 @@ if [ $CUDA_VERSION_MAJOR -eq 10 ]; then
     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++11"
 fi
 if [ $CUDA_VERSION_MAJOR -eq 11 ]; then
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_60,code=compute_60"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_62,code=compute_62"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_70,code=compute_70"
+    # export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_60,code=compute_60"
+    # export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_62,code=compute_62"
+    # export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_70,code=compute_70"
     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_75,code=compute_75"
     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++14"
 fi
@@ -111,20 +113,20 @@ fi
 
 # Turn off the gencodes for cuda versions. Above 6 - no 10 support.
 # Depending on new the cuda version is, then different SMs are supported
-if [ $CUDA_VERSION_MAJOR -gt 4 ]; then
-    export CUDA_GT_4=1
-fi
+#if [ $CUDA_VERSION_MAJOR -gt 4 ]; then
+#    export CUDA_GT_4=1
+#fi
 
-if [ $CUDA_VERSION_MAJOR -gt 6 ]; then
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM10="
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM13="
-fi
+#if [ $CUDA_VERSION_MAJOR -gt 6 ]; then
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM10="
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM13="
+#fi
 
-if [ $CUDA_VERSION_MAJOR -gt 7 ]; then
-    export CUDA_GT_7=1
-    export NVCC_ADDITIONAL_ARGS="--cudart shared"
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM20="
-fi
+#if [ $CUDA_VERSION_MAJOR -gt 7 ]; then
+#    export CUDA_GT_7=1
+#    export NVCC_ADDITIONAL_ARGS="--cudart shared"
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM20="
+#fi
 
 if [ $CUDA_VERSION_MAJOR -gt 10 ]; then
     export CUDA_GT_10=1
@@ -135,39 +137,39 @@ if [ $CUDA_VERSION_MAJOR -gt 10 ]; then
     export MAKE_ARGS="$MAKE_ARGS GENCODE_SM50="
 fi
 
-if [ $CUDA_VERSION_MAJOR -lt 5 ]; then
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM35="
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM50="
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM60="
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM62="
-fi
+#if [ $CUDA_VERSION_MAJOR -lt 5 ]; then
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM35="
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM50="
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM60="
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM62="
+#fi
 
 
-if [ $CUDA_VERSION_MAJOR -lt 7 ]; then
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM50="
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM60="
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM62="
-fi
+#if [ $CUDA_VERSION_MAJOR -lt 7 ]; then
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM50="
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM60="
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM62="
+#fi
 
-if [ $CUDA_VERSION_MAJOR -lt 8 ]; then
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM60="
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM62="
-fi
+#if [ $CUDA_VERSION_MAJOR -lt 8 ]; then
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM60="
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM62="
+#fi
 
-if [ $CUDA_VERSION_MAJOR -lt 9 ]; then
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM70="
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM75="
-fi
+#if [ $CUDA_VERSION_MAJOR -lt 9 ]; then
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM70="
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM75="
+#fi
 
-if [ $CUDA_VERSION_MAJOR -lt 10 ]; then
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM75="
-fi
+#if [ $CUDA_VERSION_MAJOR -lt 10 ]; then
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM75="
+#fi
 
 
 # 20 Deprecated in 9+
-if [ $CUDA_VERSION_MAJOR -gt 8 ]; then
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM20="
-fi
+#if [ $CUDA_VERSION_MAJOR -gt 8 ]; then
+#    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM20="
+#fi
 
 export MAKE_ARGS="$MAKE_ARGS CUBLAS_LIB=cublas_static CUDNN_LIB=cudnn_static"
 export GENCODE_FLAGS=$CUDA_CPPFLAGS
