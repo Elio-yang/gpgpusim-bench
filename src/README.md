@@ -1,20 +1,12 @@
-### Dependencies
+<h1 align="center">
+GPGPU-Sim Benchmarks
+</h1>
+<p align="center">
+YANG YANG
+</p>
 
-This repo is meant to be as self-contained as possible.
-However:
-cuda, gcc, make and scons
-are required to build all the apps.
-To build the bechmarks:
+<p>
+This repository contains the codebase for testing GPGPU-Sim simulator. These benchmarks are tailored for special research purpose. Bnechmarks that are not compatable with current simulator are removed. Deep learning applications (including ResNet, VGG, LLAMA2/3) are added. UVM benchmarks are added.
 
-```bash
-export CUDA_INSTALL_PATH=<whatever yours is the build scripts should be robust enough to build with any CUDA version. Versions 4.2 and 9.1 are extensively tested>
-export PATH=$CUDA_INSTALL_PATH/bin:$PATH
-source setup_environment
-make -i -j all
-make data
-```
-
-To see how many apps built:
-```bash
-ls ../bin/9.1/release/ | wc
-```
+Original README is [here](./README).
+</P>
