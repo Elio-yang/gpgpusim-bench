@@ -2,6 +2,11 @@
 # example override to clang: make run CC=clang
 CC = gcc
 
+
+.PHONY: gpu
+gpu:
+	nvcc -O3 -arch=sm_90 llama2.cu -o llama2 -lm -lcudart
+
 # the most basic way of building that is most likely to work on most systems
 .PHONY: run
 run: run.c

@@ -1,0 +1,2 @@
+tlb_hit,pt_hit,pt_miss_outstand,pt_miss_pend
+0,0,0,0

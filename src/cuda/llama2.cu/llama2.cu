@@ -12,6 +12,11 @@ Inference for Llama-2 Transformer model in pure Cuda.
 #include <cuda_runtime_api.h>
 #include <cuda_fp16.h>
 #include <cub/cub.cuh>
+#include <iostream>
+#include <iomanip>
+#include <cstddef>
+#include <vector>
+#include <tuple>
 
 // ----------------------------------------------------------------------------
 // GPU kernels
@@ -627,6 +632,17 @@ int argmax(float* v, int n) {
 }
 // ----------------------------------------------------------------------------
 
+void uuid_print(cudaUUID_t a){
+  std::cout << "GPU";
+  std::vector<std::tuple<int, int> > r = {{0,4}, {4,6}, {6,8}, {8,10}, {10,16}};
+  for (auto t : r){
+    std::cout << "-";
+    for (int i = std::get<0>(t); i < std::get<1>(t); i++)
+      std::cout << std::hex << std::setfill('0') << std::setw(2) << (unsigned)(unsigned char)a.bytes[i];
+  }
+  std::cout << std::endl;
+}
+
 int main(int argc, char *argv[]) {
 
     // poor man's C argparse
@@ -656,6 +672,19 @@ int main(int argc, char *argv[]) {
 
     // seed rng with time. if you want deterministic behavior use temperature 0.0
     rng_seed = (unsigned int)time(NULL);
+
+    int device_count;
+    cudaGetDeviceCount(&device_count);
+    //char target_uuid[] = "GPU-b6c540e1-c39b-dec8-9a68-080f9896391c";
+
+    for (int i = 0; i < device_count; i++) {
+        cudaDeviceProp prop;
+        cudaGetDeviceProperties(&prop, i);
+        printf("GPU %d: %s\n", i, prop.name);
+        uuid_print(prop.uuid);
+    }
+    exit(0);
+
 
     // read in the model.bin file
     Config config;
@@ -760,6 +789,14 @@ int main(int argc, char *argv[]) {
     double time = (end - start) / 1000.0;
     int timed_tokens = pos - 1;
     printf("\nachieved tok/s: %f. Tokens: %d, seconds: %g\n", timed_tokens / time, timed_tokens, time);
+    
+    FILE *fp = fopen("llama.txt","a");
+    if (fp == NULL){
+    	printf("file open error\n");
+    }
+    fprintf(fp, "%f,%g\n",timed_tokens/time,time);
+    fclose(fp);
+
 
     // memory cleanup
     free_run_state(&state);

@@ -1,0 +1,37 @@
+ptxas info    : 11 bytes gmem
+ptxas info    : Compiling entry function '_ZN3cub11EmptyKernelIvEEvv' for 'sm_70'
+ptxas info    : Function properties for _ZN3cub11EmptyKernelIvEEvv
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 4 registers, 352 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z28silu_element_wise_mul_kernelP6__halfS0_i' for 'sm_70'
+ptxas info    : Function properties for _Z28silu_element_wise_mul_kernelP6__halfS0_i
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 18 registers, 372 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z25MultiHeadAttention_kernelP6__halfPKS_S2_S2_iiiii' for 'sm_70'
+ptxas info    : Function properties for _Z25MultiHeadAttention_kernelP6__halfPKS_S2_S2_iiiii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 38 registers, 32936 bytes smem, 404 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z19RoPERotation_kernelP6__halfS0_S0_S0_ii' for 'sm_70'
+ptxas info    : Function properties for _Z19RoPERotation_kernelP6__halfS0_S0_S0_ii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 18 registers, 392 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z14mat_vec_kernelP6__halfS0_S0_iii' for 'sm_70'
+ptxas info    : Function properties for _Z14mat_vec_kernelP6__halfS0_S0_iii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 23 registers, 388 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z14rmsnorm_kernelP6__halfS0_S0_ii' for 'sm_70'
+ptxas info    : Function properties for _Z14rmsnorm_kernelP6__halfS0_S0_ii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 22 registers, 168 bytes smem, 384 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z20convert_fp16_to_fp32PfP6__halfi' for 'sm_70'
+ptxas info    : Function properties for _Z20convert_fp16_to_fp32PfP6__halfi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, 372 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z20convert_fp32_to_fp16P6__halfPfi' for 'sm_70'
+ptxas info    : Function properties for _Z20convert_fp32_to_fp16P6__halfPfi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, 372 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z23element_wise_add_kernelP6__halfS0_i' for 'sm_70'
+ptxas info    : Function properties for _Z23element_wise_add_kernelP6__halfS0_i
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, 372 bytes cmem[0]
